@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="add following item to ToDoList"
+        android:visibility="invisible"
         />
 
     <EditText
@@ -16,7 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/topdescription"
-        android:ems="13"/>
+        android:ems="13"
+        android:visibility="invisible"
+        />
 
     <Button
         android:id="@+id/addButton"
@@ -24,7 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/inputText"
         android:layout_below="@id/topdescription"
-        android:text="Add" />
+        android:text="Add"
+        android:visibility="invisible"
+        />
 
     <TextView
         android:id="@+id/description"
@@ -32,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/addButton"
         android:text="click following item to remove"
+        android:visibility="invisible"
         />
 
     <ListView
@@ -39,7 +45,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:dividerHeight="0.1dp"
-        android:divider="#0000CC"
-        android:layout_below="@+id/description">
+        android:divider="#0000CC">
+        <!--android:layout_below="@+id/description">-->
     </ListView>
 </RelativeLayout>

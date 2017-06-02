@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Database publicDatabase;
     private ArrayList<String> toDoList;
-    private Record delRecord;
     private ListView listViewToDo;
     private Button addButton;
     private EditText inputText;
@@ -101,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAndSave();
+                addItem();
             }
         });
     }
@@ -155,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         publicDatabase.save(record,handler);
     }
 
-    public void addAndSave(){
+    public void addItem(){
         String input = inputText.getText().toString();
         Record newRecord = new Record("todoRecord1");
         newRecord.set("title", "titleOftodoRecord");
@@ -169,10 +167,6 @@ public class MainActivity extends AppCompatActivity {
         toDoList.add(input);
         arrayAdapter.clear();
         arrayAdapter.addAll(toDoList);
-        Log.i("now number of element", String.valueOf(toDoList.size()));
-        for (int i=0;i<toDoList.size();i++){
-            Log.i("1",toDoList.get(i));
-        }
         arrayAdapter.notifyDataSetChanged();
     }
 
@@ -225,10 +219,6 @@ public class MainActivity extends AppCompatActivity {
         toDoList.addAll(temp);
         arrayAdapter.clear();
         arrayAdapter.addAll(toDoList);
-        Log.i("now number of element", String.valueOf(toDoList.size()));
-        for (int i=0;i<toDoList.size();i++){
-            Log.i("1",toDoList.get(i));
-        }
         arrayAdapter.notifyDataSetChanged();
 
     }
