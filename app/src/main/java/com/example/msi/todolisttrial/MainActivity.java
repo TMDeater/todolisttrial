@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         toDoList = new ArrayList<String>();
         listViewToDo = (ListView) findViewById(R.id.listViewToDo);
-        String[] arrayColumns = new String[]{"body"};
-        int[] arrayViewIDs = new int[]{R.id.textViewBody};
+        //String[] arrayColumns = new String[]{"body"};
 
         // get Skygear Container
         Container skygear = Container.defaultContainer(this);
