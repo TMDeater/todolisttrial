@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import io.skygear.skygear.AuthContainer;
+import io.skygear.skygear.AuthResponseHandler;
 import io.skygear.skygear.Container;
-import io.skygear.skygear.LoginRequest;
-import io.skygear.skygear.SignupRequest;
+import io.skygear.skygear.Error;
+import io.skygear.skygear.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,9 +39,19 @@ public class MainActivity extends AppCompatActivity {
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = loginname.getText().toString();
-                String password = loginpw.getText().toString();
-                nextPage(username,password);
+                final String username = loginname.getText().toString();
+                final String password = loginpw.getText().toString();
+                skygear.loginWithUsername(username, password, new AuthResponseHandler() {
+                    @Override
+                    public void onAuthSuccess(User user) {
+                        nextPage(username,password);
+                    }
+
+                    @Override
+                    public void onAuthFail(Error error) {
+
+                    }
+                });
             }
         });
 
@@ -49,9 +59,19 @@ public class MainActivity extends AppCompatActivity {
         signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = signupname.getText().toString();
-                String password = signuppw.getText().toString();
-                nextPage(username,password);
+                final String username = signupname.getText().toString();
+                final String password = signuppw.getText().toString();
+                skygear.signupWithUsername(username, password, new AuthResponseHandler() {
+                    @Override
+                    public void onAuthSuccess(User user) {
+                        nextPage(username,password);
+                    }
+
+                    @Override
+                    public void onAuthFail(Error error) {
+
+                    }
+                });
             }
         });
     }

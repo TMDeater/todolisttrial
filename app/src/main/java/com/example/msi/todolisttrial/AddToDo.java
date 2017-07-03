@@ -6,11 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,10 +17,7 @@ import io.skygear.skygear.AuthResponseHandler;
 import io.skygear.skygear.Container;
 import io.skygear.skygear.Database;
 import io.skygear.skygear.Error;
-import io.skygear.skygear.Query;
 import io.skygear.skygear.Record;
-import io.skygear.skygear.RecordDeleteResponseHandler;
-import io.skygear.skygear.RecordQueryResponseHandler;
 import io.skygear.skygear.RecordSaveResponseHandler;
 import io.skygear.skygear.User;
 
@@ -32,17 +26,15 @@ public class AddToDo extends AppCompatActivity {
     private String username;
     private String password;
     private Database publicDatabase;
-    private ArrayList<String> toDoList;
     private TextView addButton;
     private EditText inputText;
-    private ArrayAdapter<String> arrayAdapter;
     private Context context;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_to_do);
         setTitle("Add Item To TODO List");
         context = this;
 
@@ -56,12 +48,10 @@ public class AddToDo extends AppCompatActivity {
 //        skygear.loginWithUsername(username,password,new AuthResponseHandler() {
 //            @Override
 //            public void onAuthSuccess(User user) {
-//                Log.i("MyApplication", "Signup successfully");
 //            }
 //
 //            @Override
 //            public void onAuthFail(Error error) {
-//                Log.w("MyApplication", "Failed to signup: " + error.getMessage(), error);
 //            }
 //        });
 

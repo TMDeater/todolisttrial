@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Map;
 
+import io.skygear.skygear.AuthResponseHandler;
 import io.skygear.skygear.Container;
 import io.skygear.skygear.Database;
 import io.skygear.skygear.Error;
@@ -22,6 +23,7 @@ import io.skygear.skygear.Record;
 import io.skygear.skygear.RecordDeleteResponseHandler;
 import io.skygear.skygear.RecordQueryResponseHandler;
 import io.skygear.skygear.RecordSaveResponseHandler;
+import io.skygear.skygear.User;
 
 public class ToDoList extends AppCompatActivity {
 
@@ -51,17 +53,17 @@ public class ToDoList extends AppCompatActivity {
         // get Skygear Container
         Container skygear = Container.defaultContainer(this);
 
-//        skygear.loginWithUsername(username,password,new AuthResponseHandler() {
-//            @Override
-//            public void onAuthSuccess(User user) {
-//                Log.i("MyApplication", "Signup successfully");
-//            }
-//
-//            @Override
-//            public void onAuthFail(Error error) {
-//                Log.w("MyApplication", "Failed to signup: " + error.getMessage(), error);
-//            }
-//        });
+        skygear.loginWithUsername(username,password,new AuthResponseHandler() {
+            @Override
+            public void onAuthSuccess(User user) {
+                Log.i("MyApplication", "Signup successfully");
+            }
+
+            @Override
+            public void onAuthFail(Error error) {
+                Log.w("MyApplication", "Failed to signup: " + error.getMessage(), error);
+            }
+        });
 
         // get public database
         publicDatabase = skygear.getPublicDatabase();
@@ -99,11 +101,7 @@ public class ToDoList extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(ToDoList.this, AddToDo.class);
-                i.putExtra("username", username);
-                i.putExtra("password", password);
-                startActivity(i);
+                nextPage();
             }
         });
     }
@@ -208,5 +206,13 @@ public class ToDoList extends AppCompatActivity {
         arrayAdapter.addAll(toDoList);
         arrayAdapter.notifyDataSetChanged();
 
+    }
+
+    private void nextPage() {
+        Intent i = new Intent();
+        i.setClass(this,AddToDo.class);
+        i.putExtra("username",username);
+        i.putExtra("password",password);
+        startActivity(i);
     }
 }
