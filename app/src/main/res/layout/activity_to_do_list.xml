@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:background="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"
+        android:text="Add New TODO Item"
+        android:textSize="25dp"
+        />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addButton"
+        android:text="click following item to remove"
+        />
+
+    <ListView
+        android:id="@+id/listViewToDo"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:dividerHeight="0.1dp"
+        android:divider="#0000CC"
+        android:layout_below="@+id/description">
+    </ListView>
+</RelativeLayout>
