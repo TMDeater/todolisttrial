@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddToDo" />
-        <activity android:name=".ToDoList"></activity>
+        <activity android:name=".ToDoList" />
+        <activity android:name=".RemoveToDo"></activity>
     </application>
 
 </manifest>

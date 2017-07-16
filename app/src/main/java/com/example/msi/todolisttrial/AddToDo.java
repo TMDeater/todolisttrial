@@ -6,11 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import io.skygear.skygear.AuthResponseHandler;
@@ -23,12 +21,10 @@ import io.skygear.skygear.User;
 
 public class AddToDo extends AppCompatActivity {
 
-    private String username;
-    private String password;
     private Database publicDatabase;
     private TextView addButton;
+    private TextView skipButton;
     private EditText inputText;
-    private Context context;
 
 
     @Override
@@ -36,34 +32,28 @@ public class AddToDo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_do);
         setTitle("Add Item To TODO List");
-        context = this;
-
-        Intent i = getIntent();
-        username = i.getStringExtra("username");
-        password = i.getStringExtra("password");
 
         // get Skygear Container
         Container skygear = Container.defaultContainer(this);
-
-//        skygear.loginWithUsername(username,password,new AuthResponseHandler() {
-//            @Override
-//            public void onAuthSuccess(User user) {
-//            }
-//
-//            @Override
-//            public void onAuthFail(Error error) {
-//            }
-//        });
 
         // get public database
         publicDatabase = skygear.getPublicDatabase();
 
         inputText = (EditText) findViewById(R.id.inputText);
+
         addButton = (TextView) findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addItem();
+            }
+        });
+
+        skipButton = (TextView) findViewById(R.id.skipButton);
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextPage();
             }
         });
     }
@@ -109,9 +99,11 @@ public class AddToDo extends AppCompatActivity {
         newRecord.set("toDoListElement", input);
         saveDatabase(newRecord);
 
+        nextPage();
+    }
+
+    private void nextPage(){
         Intent i = new Intent();
-        i.putExtra("username", username);
-        i.putExtra("password", password);
         i.setClass(this, ToDoList.class);
         startActivity(i);
     }

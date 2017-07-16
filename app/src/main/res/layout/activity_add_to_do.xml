@@ -32,4 +32,17 @@
         android:textColor="@android:color/white"
         />
 
+    <TextView
+        android:id="@+id/skipButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addButton"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Go to TODO list"
+        android:textSize="25dp"
+        android:background="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"
+        />
+
 </RelativeLayout>

@@ -78,9 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void nextPage(String username, String password){
         Intent i = new Intent();
-        i.setClass(this,ToDoList.class);
-        i.putExtra("username",username);
-        i.putExtra("password",password);
+        i.setClass(this,AddToDo.class);
         startActivity(i);
     }
 }

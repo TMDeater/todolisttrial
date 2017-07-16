@@ -27,12 +27,11 @@ import io.skygear.skygear.User;
 
 public class ToDoList extends AppCompatActivity {
 
-    private String username;
-    private String password;
     private Database publicDatabase;
     private ArrayList<String> toDoList;
     private ListView listViewToDo;
     private TextView addButton;
+    private TextView removeButton;
     private ArrayAdapter<String> arrayAdapter;
     private Context context;
 
@@ -43,27 +42,11 @@ public class ToDoList extends AppCompatActivity {
         setTitle("ToDoList");
         context = this;
 
-        Intent i = getIntent();
-        username = i.getStringExtra("username");
-        password = i.getStringExtra("password");
-
         toDoList = new ArrayList<String>();
         listViewToDo = (ListView) findViewById(R.id.listViewToDo);
 
         // get Skygear Container
         Container skygear = Container.defaultContainer(this);
-
-        skygear.loginWithUsername(username,password,new AuthResponseHandler() {
-            @Override
-            public void onAuthSuccess(User user) {
-                Log.i("MyApplication", "Signup successfully");
-            }
-
-            @Override
-            public void onAuthFail(Error error) {
-                Log.w("MyApplication", "Failed to signup: " + error.getMessage(), error);
-            }
-        });
 
         // get public database
         publicDatabase = skygear.getPublicDatabase();
@@ -72,10 +55,8 @@ public class ToDoList extends AppCompatActivity {
         publicDatabase.query(findQuery, new RecordQueryResponseHandler() {
             @Override
             public void onQuerySuccess(Record[] records) {
-                Log.i("Record Query", String.format("Successfully got %d records", records.length));
-                if (records.length<=0){
-                    initializeRecord();
-                }else{
+                if (records.length<=0){}
+                else{
                     loadToDoList(records);
                 }
                 // Create The Adapter with passing ArrayList as 3rd parameter
@@ -93,7 +74,6 @@ public class ToDoList extends AppCompatActivity {
 
             @Override
             public void onQueryError(Error error) {
-                Log.i("Record Query", String.format("Fail with reason: %s", error));
             }
         });
 
@@ -104,55 +84,20 @@ public class ToDoList extends AppCompatActivity {
                 nextPage();
             }
         });
-    }
 
-    private void initializeRecord() {
-        toDoList.add("Buy apple");
-
-        Record first = new Record("todoRecord1");
-        first.set("title", "titleOftodoRecord");
-        first.set("toDoListElement", "Buy Apple");
-        saveDatabase(first);
+        removeButton = (TextView) findViewById(R.id.removeButton);
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextRemovePage();
+            }
+        });
     }
 
     private void loadToDoList(Record[] records){
         for (int i=0;i<records.length;i++){
             toDoList.add((String) records[i].get("toDoListElement"));
         }
-    }
-
-    private void saveDatabase(Record record){
-        RecordSaveResponseHandler handler = new RecordSaveResponseHandler() {
-            @Override
-            public void onSaveSuccess(Record[] records) {
-                Log.i(
-                        "Skygear Record Save",
-                        "Successfully saved " + records.length + " records"
-                );
-
-            }
-
-            @Override
-            public void onPartiallySaveSuccess(Map<String, Record> successRecords, Map<String, Error> errors) {
-                Log.i(
-                        "Skygear Record Save",
-                        "Successfully saved " + successRecords.size() + " records"
-                );
-                Log.i(
-                        "Skygear Record Save",
-                        errors.size() + " records are fail to save"
-                );
-            }
-
-            @Override
-            public void onSaveFail(Error error) {
-                Log.i(
-                        "Skygear Record Save",
-                        "Fail to save: " + error
-                );
-            }
-        };
-        publicDatabase.save(record,handler);
     }
 
     public void removeItem(final int position){
@@ -162,32 +107,13 @@ public class ToDoList extends AppCompatActivity {
             public void onQuerySuccess(Record[] records) {
                 RecordDeleteResponseHandler handler = new RecordDeleteResponseHandler() {
                     @Override
-                    public void onDeleteSuccess(String[] ids) {
-                        Log.i(
-                                "Skygear Record Delete",
-                                "Successfully deleted " + ids.length + " records"
-                        );
-                    }
+                    public void onDeleteSuccess(String[] ids) {}
 
                     @Override
-                    public void onDeletePartialSuccess(String[] ids, Map<String, Error> errors) {
-                        Log.i(
-                                "Skygear Record Delete",
-                                "Successfully deleted " + ids.length + " records"
-                        );
-                        Log.i(
-                                "Skygear Record Delete",
-                                errors.size() + " records are fail to delete"
-                        );
-                    }
+                    public void onDeletePartialSuccess(String[] ids, Map<String, Error> errors) {}
 
                     @Override
-                    public void onDeleteFail(Error error) {
-                        Log.i(
-                                "Skygear Record Delete",
-                                "Fail to delete: " + error
-                        );
-                    }
+                    public void onDeleteFail(Error error) {}
                 };
                 publicDatabase.delete(records[position], handler);
             }
@@ -211,8 +137,12 @@ public class ToDoList extends AppCompatActivity {
     private void nextPage() {
         Intent i = new Intent();
         i.setClass(this,AddToDo.class);
-        i.putExtra("username",username);
-        i.putExtra("password",password);
+        startActivity(i);
+    }
+
+    private void nextRemovePage(){
+        Intent i = new Intent();
+        i.setClass(this,RemoveToDo.class);
         startActivity(i);
     }
 }
