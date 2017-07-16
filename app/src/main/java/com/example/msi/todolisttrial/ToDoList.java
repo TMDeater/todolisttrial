@@ -63,13 +63,6 @@ public class ToDoList extends AppCompatActivity {
                 arrayAdapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, toDoList);
                 // Set The Adapter
                 listViewToDo.setAdapter(arrayAdapter);
-
-                listViewToDo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        removeItem(position);
-                    }
-                });
             }
 
             @Override
@@ -98,40 +91,6 @@ public class ToDoList extends AppCompatActivity {
         for (int i=0;i<records.length;i++){
             toDoList.add((String) records[i].get("toDoListElement"));
         }
-    }
-
-    public void removeItem(final int position){
-        Query findQuery = new Query("todoRecord1").equalTo("title", "titleOftodoRecord");
-        publicDatabase.query(findQuery, new RecordQueryResponseHandler() {
-            @Override
-            public void onQuerySuccess(Record[] records) {
-                RecordDeleteResponseHandler handler = new RecordDeleteResponseHandler() {
-                    @Override
-                    public void onDeleteSuccess(String[] ids) {}
-
-                    @Override
-                    public void onDeletePartialSuccess(String[] ids, Map<String, Error> errors) {}
-
-                    @Override
-                    public void onDeleteFail(Error error) {}
-                };
-                publicDatabase.delete(records[position], handler);
-            }
-
-            @Override
-            public void onQueryError(Error error) {
-            }
-        });
-
-        ArrayList<String> temp = new ArrayList<>();
-        temp.addAll(toDoList);
-        temp.remove(position);
-        toDoList=new ArrayList<>();
-        toDoList.addAll(temp);
-        arrayAdapter.clear();
-        arrayAdapter.addAll(toDoList);
-        arrayAdapter.notifyDataSetChanged();
-
     }
 
     private void nextPage() {
