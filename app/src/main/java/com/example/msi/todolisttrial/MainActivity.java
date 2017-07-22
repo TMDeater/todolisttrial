@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 skygear.loginWithUsername(username, password, new AuthResponseHandler() {
                     @Override
                     public void onAuthSuccess(User user) {
-                        nextPage(username,password);
+                        nextPage();
                     }
 
                     @Override
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 skygear.signupWithUsername(username, password, new AuthResponseHandler() {
                     @Override
                     public void onAuthSuccess(User user) {
-                        nextPage(username,password);
+                        nextPage();
                     }
 
                     @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void nextPage(String username, String password){
+    private void nextPage(){
         Intent i = new Intent();
         i.setClass(this,AddToDo.class);
         startActivity(i);
